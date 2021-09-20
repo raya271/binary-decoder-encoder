@@ -15,4 +15,14 @@ public class Umrechner {
 
         return ergebnis;
     }
+
+    public long encode(int dezimalZahl) {
+        StringBuilder builder = new StringBuilder();
+        while (dezimalZahl > 0) {
+            String rest =  "" + (dezimalZahl % 2);
+            builder.insert(0, rest);
+            dezimalZahl = dezimalZahl/2;
+        }
+        return Long.parseLong(builder.toString());
+    }
 }
