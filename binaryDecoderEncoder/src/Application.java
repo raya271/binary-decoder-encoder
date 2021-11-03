@@ -2,63 +2,51 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
-public class Application {
+public class Application extends JFrame implements ActionListener {
 
     private static Umrechner umrechner;
 
+    private JTextField eingabe;
+    private JLabel ergebnis;
+    private JRadioButton dezToBin;
+    private JRadioButton binToDez;
+
     public static void main(String args[]) {
+        umrechner = new Umrechner();
+        Application app = new Application();
+        app.setSize(400, 500);
+        app.setLayout(new GridLayout(3, 2));
+        app.setVisible(true);
+        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 
-        JFrame frame = new JFrame();
+    public Application() {
+        dezToBin = new JRadioButton("Dezimalzahl in Binärzahl");
+        binToDez = new JRadioButton("Binärzahl in Dezimalzahl");
+        ButtonGroup radioButtonGroup = new ButtonGroup();
+        radioButtonGroup.add(dezToBin);
+        radioButtonGroup.add(binToDez);
 
-        JTextField eingabe = new JTextField(16);
+        eingabe = new JTextField(16);
         JButton button = new JButton("umrechnen");
-        JLabel label = new JLabel("Ergebnis:");
-        JLabel ergebnis = new JLabel();
+        JLabel labelErgebnis = new JLabel("Ergebnis:");
+        ergebnis = new JLabel();
 
-        button.addActionListener(new ListenerUmrechnen());
+        button.addActionListener(this);
 
-        frame.add(eingabe);
-        frame.add(button);
-        frame.add(label);
-        frame.add(ergebnis);
-        frame.setSize(400,500);
-        frame.setLayout(new GridLayout(2,2));
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
-
-
-//        umrechner = new Umrechner();
-//        long zahlErgebnis;
-//        Scanner scanner = new Scanner(System.in);
-//
-//        System.out.println("Um eine Binärzahl umzurechnen, gib eine 1 ein.");
-//        System.out.println("Um eine Dezimalzahl umzurechnen, gib eine 2 ein.");
-//        int programm = scanner.nextInt();
-//        if (programm != 1 && programm != 2) {
-//            System.out.println("Kein gültiges Programm ausgewählt!");
-//            return;
-//        }
-//        System.out.println("Gib deine Zahl ein:");
-//        int zahlEingabe = scanner.nextInt();
-//        if (programm == 1){
-//            zahlErgebnis = umrechner.decode(""+zahlEingabe);
-//        } else {
-//            zahlErgebnis = umrechner.encode(zahlEingabe);
-//        }
-//        System.out.println(zahlErgebnis);
-
+        add(dezToBin);
+        add(binToDez);
+        add(eingabe);
+        add(button);
+        add(labelErgebnis);
+        add(ergebnis);
     }
 
-    public static class ListenerUmrechnen implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int dezimalZahl = umrechner.decode(eingabe.getText());
+        ergebnis.setText("" + dezimalZahl);
     }
+
 }
