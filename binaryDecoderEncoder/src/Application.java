@@ -12,7 +12,7 @@ public class Application extends JFrame implements ActionListener {
     private JRadioButton dezToBin;
     private JRadioButton binToDez;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         umrechner = new Umrechner();
         Application app = new Application();
         app.setSize(400, 500);
@@ -27,6 +27,7 @@ public class Application extends JFrame implements ActionListener {
         ButtonGroup radioButtonGroup = new ButtonGroup();
         radioButtonGroup.add(dezToBin);
         radioButtonGroup.add(binToDez);
+        dezToBin.setSelected(true);
 
         eingabe = new JTextField(16);
         JButton button = new JButton("umrechnen");
@@ -45,8 +46,15 @@ public class Application extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int dezimalZahl = umrechner.decode(eingabe.getText());
-        ergebnis.setText("" + dezimalZahl);
+        long umgerechneteZahl;
+        if (binToDez.isSelected()) {
+            umgerechneteZahl = umrechner.decode(eingabe.getText());
+        }
+        else{
+            umgerechneteZahl = umrechner.encode(Integer.parseInt(eingabe.getText()));
+
+        }
+        ergebnis.setText("" + umgerechneteZahl);
     }
 
 }
